@@ -222,17 +222,80 @@ Output: Risk matrix table sorted by risk score (highest first).
    - Top 3 key assumptions that could change the recommendation
    - 3-5 concrete recommended next steps
 
-## Phase 6: Report Generation
+## Phase 6: Report Presentation and Discussion
 
-Read `references/report-template.md` for the output format.
+Read `references/report-template.md` for the full output format.
 
-1. Generate the complete feasibility report
-2. Save to: `feasibility-report-{product-name}-{YYYY-MM-DD}.md` in the current
-   working directory
-3. Print the Executive Summary section to the user inline
-4. Tell the user where the report was saved
-5. Ask: "Report generated. Would you like to adjust any section, explore a
-   specific dimension deeper, or change the depth level?"
+### Step 1: Save the full report
+Generate the complete feasibility report and save to:
+`feasibility-report-{product-name}-{YYYY-MM-DD}.md` in the current working directory.
+
+### Step 2: Present inline summary with scorecard
+
+Print the following formatted summary directly to the user:
+
+```
+---
+
+## Feasibility Study: {Product Name}
+
+### Verdict: {GO | NO-GO | CONDITIONAL GO}
+
+| Dimension    | Score | Confidence | Key Finding                        |
+|--------------|-------|------------|------------------------------------|
+| Technical    | {X}/5 | {L/M/H}    | {one-line finding}                 |
+| Economic     | {X}/5 | {L/M/H}    | {one-line finding}                 |
+| Market       | {X}/5 | {L/M/H}    | {one-line finding}                 |
+| Operational  | {X}/5 | {L/M/H}    | {one-line finding}                 |
+| Schedule     | {X}/5 | {L/M/H}    | {one-line finding}                 |
+| **Overall**  | **{X.X}/5** |     |                                    |
+
+### Key Numbers
+- **Development effort:** {range} person-months ({with AI adjustment note})
+- **Development cost:** ${range}
+- **Time to MVP:** {range}
+- **Annual operating cost:** ${range} (Year 1)
+- **Payback period:** {range}
+
+### Top 3 Risks
+1. {risk} (Score: {X}) — {mitigation}
+2. {risk} (Score: {X}) — {mitigation}
+3. {risk} (Score: {X}) — {mitigation}
+
+---
+```
+
+### Step 3: Walk through key discussion points
+
+After presenting the summary, walk the user through each key point
+interactively. Use AskUserQuestion to guide the discussion:
+
+Ask: "Here are the key points I'd like to discuss. What would you like
+to dig into first?"
+
+Options:
+- **Technical deep-dive** — Architecture, stack choices, and the hardest
+  engineering challenges
+- **Cost breakdown** — Where the money goes, hidden costs, and how to
+  optimize
+- **Competitive strategy** — How to differentiate from existing players
+- **Risk mitigation** — The highest-risk items and what to do about them
+- **Next steps** — The recommended action plan to move forward
+- **Full report** — Show the complete detailed report
+
+### Step 4: Discuss the selected topic
+
+For whichever topic the user selects, expand on that section of the
+analysis with specifics, trade-offs, and actionable detail. After
+discussing, ask if they want to explore another topic or if they're done.
+
+### Step 5: Wrap up
+
+When the user is done discussing, remind them:
+- Full report saved to: `feasibility-report-{product-name}-{date}.md`
+- Offer to open it: `open {path}`
+- Offer to adjust any scores, re-run at a different depth, or analyze
+  a different product
 
 ## Important Rules
 
