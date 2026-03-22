@@ -12,8 +12,17 @@ Supported operations:
   tco             - Total cost of ownership projection
   roi             - ROI and payback period calculation
 
+All operations support an optional "ai_multiplier" field (0.0-1.0) that
+reduces effort estimates to account for AI-assisted development. This
+represents the fraction of effort saved by using AI coding tools.
+
+  ai_multiplier: 0.0  = no AI assistance (traditional development)
+  ai_multiplier: 0.3  = moderate AI assistance (copilot, code completion)
+  ai_multiplier: 0.5  = heavy AI assistance (AI agent coding, pair programming)
+  ai_multiplier: 0.7  = AI-first development (AI writes most code, human reviews)
+
 Usage:
-  echo '{"operation": "cocomo", "kloc": 50, "mode": "semi-detached"}' | python3 estimate.py
+  echo '{"operation": "cocomo", "kloc": 50, "mode": "semi-detached", "ai_multiplier": 0.4}' | python3 estimate.py
 """
 
 import json
@@ -67,6 +76,59 @@ TSHIRT_ESTIMATES = {
     },
 }
 
+# --- AI Productivity Multipliers ---
+
+AI_ASSISTANCE_LEVELS = {
+    "none": 0.0,       # Traditional development
+    "low": 0.2,        # Basic code completion (GitHub Copilot autocomplete)
+    "moderate": 0.35,  # AI pair programming (Copilot Chat, Cursor)
+    "high": 0.5,       # AI agent coding (Claude Code, Devin, Windsurf)
+    "very_high": 0.65, # AI-first development (AI writes most code, human reviews)
+}
+
+
+def apply_ai_multiplier(effort, data):
+    """
+    Apply AI productivity multiplier to effort estimates.
+
+    Accepts either:
+      ai_multiplier: float 0.0-1.0 (direct fraction of effort saved)
+      ai_level: none | low | moderate | high | very_high (named level)
+
+    Returns: (adjusted_effort, ai_info_dict)
+    """
+    ai_mult = data.get("ai_multiplier")
+    ai_level = data.get("ai_level")
+
+    if ai_mult is None and ai_level is None:
+        return effort, {"ai_assisted": False}
+
+    if ai_mult is None:
+        if ai_level not in AI_ASSISTANCE_LEVELS:
+            return effort, {"ai_assisted": False, "warning": f"Unknown ai_level: {ai_level}"}
+        ai_mult = AI_ASSISTANCE_LEVELS[ai_level]
+        level_name = ai_level
+    else:
+        ai_mult = max(0.0, min(1.0, float(ai_mult)))
+        # Find closest named level
+        level_name = "custom"
+        for name, val in AI_ASSISTANCE_LEVELS.items():
+            if abs(val - ai_mult) < 0.05:
+                level_name = name
+                break
+
+    adjusted = effort * (1.0 - ai_mult)
+
+    return adjusted, {
+        "ai_assisted": True,
+        "ai_multiplier": ai_mult,
+        "ai_level": level_name,
+        "effort_reduction_pct": round(ai_mult * 100, 1),
+        "traditional_effort": round(effort, 1),
+        "ai_adjusted_effort": round(adjusted, 1),
+    }
+
+
 # --- Functions ---
 
 
@@ -78,6 +140,8 @@ def cocomo(data):
       kloc: estimated thousands of lines of code
       mode: organic | semi-detached | embedded
       eaf: effort adjustment factor (optional, default 1.0)
+      ai_multiplier: 0.0-1.0 (optional, AI productivity adjustment)
+      ai_level: none|low|moderate|high|very_high (optional, named AI level)
 
     Output:
       effort_person_months, schedule_months, team_size, cost estimates
@@ -91,7 +155,8 @@ def cocomo(data):
 
     params = COCOMO_PARAMS[mode]
 
-    effort_pm = params["a"] * (kloc ** params["b"]) * eaf
+    traditional_effort_pm = params["a"] * (kloc ** params["b"]) * eaf
+    effort_pm, ai_info = apply_ai_multiplier(traditional_effort_pm, data)
     schedule_months = params["c"] * (effort_pm ** params["d"])
     team_size = effort_pm / schedule_months if schedule_months > 0 else 0
 
@@ -99,7 +164,7 @@ def cocomo(data):
     for region, rate in MONTHLY_RATES.items():
         costs[region] = round(effort_pm * rate)
 
-    return {
+    result = {
         "effort_person_months": round(effort_pm, 1),
         "schedule_months": round(schedule_months, 1),
         "team_size": round(team_size, 1),
@@ -108,6 +173,9 @@ def cocomo(data):
         "eaf": eaf,
         "cost_by_region": costs,
     }
+    if ai_info.get("ai_assisted"):
+        result["ai_adjustment"] = ai_info
+    return result
 
 
 def function_points(data):
@@ -131,15 +199,18 @@ def function_points(data):
     hours_per_fp = data.get("hours_per_fp", hours_map.get(complexity, 14))
 
     adjusted_fp = ufp * vaf
-    effort_hours = adjusted_fp * hours_per_fp
-    effort_pm = effort_hours / 160  # 160 hours per person-month
+    traditional_hours = adjusted_fp * hours_per_fp
+    traditional_pm = traditional_hours / 160  # 160 hours per person-month
+
+    effort_pm, ai_info = apply_ai_multiplier(traditional_pm, data)
+    effort_hours = effort_pm * 160
 
     costs = {}
     for region, monthly_rate in MONTHLY_RATES.items():
         hourly = monthly_rate / 160
         costs[region] = round(effort_hours * hourly)
 
-    return {
+    result = {
         "unadjusted_fp": ufp,
         "vaf": vaf,
         "adjusted_fp": round(adjusted_fp, 1),
@@ -148,6 +219,9 @@ def function_points(data):
         "effort_person_months": round(effort_pm, 1),
         "cost_by_region": costs,
     }
+    if ai_info.get("ai_assisted"):
+        result["ai_adjustment"] = ai_info
+    return result
 
 
 def tshirt(data):
@@ -171,16 +245,36 @@ def tshirt(data):
 
     est = TSHIRT_ESTIMATES[complexity][team]
 
-    return {
+    # Apply AI multiplier to duration (weeks) as a proxy for effort
+    avg_weeks = (est["weeks"][0] + est["weeks"][1]) / 2
+    adj_weeks, ai_info = apply_ai_multiplier(avg_weeks, data)
+
+    if ai_info.get("ai_assisted"):
+        ai_mult = ai_info["ai_multiplier"]
+        factor = 1.0 - ai_mult
+        weeks_min = round(est["weeks"][0] * factor)
+        weeks_max = round(est["weeks"][1] * factor)
+        cost_min = round(est["cost"][0] * factor)
+        cost_max = round(est["cost"][1] * factor)
+    else:
+        weeks_min = est["weeks"][0]
+        weeks_max = est["weeks"][1]
+        cost_min = est["cost"][0]
+        cost_max = est["cost"][1]
+
+    result = {
         "complexity": complexity,
         "team_size": team,
-        "duration_weeks_min": est["weeks"][0],
-        "duration_weeks_max": est["weeks"][1],
-        "duration_months_min": round(est["weeks"][0] / 4.33, 1),
-        "duration_months_max": round(est["weeks"][1] / 4.33, 1),
-        "cost_min": est["cost"][0],
-        "cost_max": est["cost"][1],
+        "duration_weeks_min": weeks_min,
+        "duration_weeks_max": weeks_max,
+        "duration_months_min": round(weeks_min / 4.33, 1),
+        "duration_months_max": round(weeks_max / 4.33, 1),
+        "cost_min": cost_min,
+        "cost_max": cost_max,
     }
+    if ai_info.get("ai_assisted"):
+        result["ai_adjustment"] = ai_info
+    return result
 
 
 def tco(data):

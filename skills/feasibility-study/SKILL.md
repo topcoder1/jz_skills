@@ -125,10 +125,18 @@ Estimate:
 - **Revenue projection**: Based on business model and market size
 - **ROI analysis**: Payback period, 3-year ROI
 
-To run the estimation script (deep mode):
+All estimation script operations support AI productivity adjustment. Always
+ask the user about their AI tooling and apply the appropriate multiplier:
+
 ```bash
-echo '{"operation": "cocomo", "kloc": <estimated_kloc>, "mode": "<organic|semi-detached|embedded>"}' | python3 ${CLAUDE_SKILL_DIR}/scripts/estimate.py
+# With AI assistance level (named)
+echo '{"operation": "cocomo", "kloc": <kloc>, "mode": "semi-detached", "ai_level": "high"}' | python3 ${CLAUDE_SKILL_DIR}/scripts/estimate.py
+
+# With custom AI multiplier (0.0-1.0)
+echo '{"operation": "function_points", "unadjusted_fp": 320, "complexity": "complex", "ai_multiplier": 0.4}' | python3 ${CLAUDE_SKILL_DIR}/scripts/estimate.py
 ```
+
+AI levels: `none` (0%), `low` (20%), `moderate` (35%), `high` (50%), `very_high` (65%)
 
 Output: Economic Feasibility Score (1-5) with cost summary table.
 

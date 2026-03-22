@@ -213,6 +213,43 @@ For each major component, evaluate:
 
 **Rule of thumb**: Build what differentiates you. Buy everything else.
 
+## AI Productivity Adjustment
+
+Modern development with AI coding assistants significantly changes effort
+estimates. Apply the appropriate multiplier based on the team's AI tooling:
+
+| AI Level   | Multiplier | Tools / Approach                                    |
+|------------|------------|-----------------------------------------------------|
+| None       | 0% saved   | Traditional development, no AI assistance           |
+| Low        | 20% saved  | Basic code completion (GitHub Copilot autocomplete) |
+| Moderate   | 35% saved  | AI pair programming (Copilot Chat, Cursor Tab)      |
+| High       | 50% saved  | AI agent coding (Claude Code, Devin, Windsurf)      |
+| Very High  | 65% saved  | AI-first development (AI writes most code, human reviews) |
+
+### When to Apply
+
+- **Always ask** the user about their planned AI tooling during Discovery
+- Apply to **development effort only** — infrastructure, SaaS, and support costs are unaffected
+- AI multiplier reduces **person-hours**, which reduces cost but may not reduce calendar time proportionally (some tasks are sequential regardless of speed)
+- The multiplier applies best to **well-understood patterns** (CRUD, APIs, dashboards). Reduce the multiplier for novel/research-heavy work.
+
+### Adjustment Rules
+
+- For components rated complexity 1-2 (off-the-shelf, light custom): use full AI multiplier
+- For components rated complexity 3 (moderate custom): use 75% of the AI multiplier
+- For components rated complexity 4-5 (significant/research): use 50% of the AI multiplier
+- For infrastructure and DevOps work: use 50% of the AI multiplier
+
+### Script Usage
+
+All estimation operations accept `ai_level` or `ai_multiplier`:
+```bash
+echo '{"operation": "cocomo", "kloc": 50, "mode": "semi-detached", "ai_level": "high"}' | python3 estimate.py
+echo '{"operation": "tshirt", "complexity": "complex", "team_size": "small", "ai_multiplier": 0.4}' | python3 estimate.py
+```
+
+The output includes an `ai_adjustment` section showing traditional vs. adjusted effort.
+
 ## ROI Calculation
 
 ```
