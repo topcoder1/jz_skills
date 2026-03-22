@@ -190,6 +190,36 @@ Analyze:
 
 Output: Schedule Feasibility Score (1-5) with timeline table.
 
+### 3f. Automation Feasibility
+
+Read `references/automation-analysis.md` for the framework.
+
+Analyze each operational function of the product for automation potential:
+
+- **Component automation audit**: For every major component/function, classify
+  as Fully Automatable / Partially Automatable / Requires Human
+- **Data pipeline automation**: Can data collection, processing, and delivery
+  run unattended? What breaks require human intervention?
+- **Quality assurance automation**: Can correctness be validated
+  programmatically (self-validating loops) or does it need human judgment?
+- **Customer lifecycle automation**: Onboarding, billing, support — can the
+  full customer journey be self-serve?
+- **Maintenance automation**: Can ongoing upkeep (updates, monitoring, fixes)
+  be handled by scheduled jobs + AI, or does it need manual attention?
+- **Human intervention points**: List every remaining point where a human
+  must intervene. For each, assess if AI can eventually replace it.
+- **Solo operator viability**: Can one person run this product at scale with
+  AI assistance, or does growth require proportional headcount?
+
+Output: Automation Feasibility Score (1-5) with component automation table.
+
+Scoring guide:
+- 5: Fully automatable — runs unattended, self-heals, scales without headcount
+- 4: Near-full automation — occasional human check-ins (weekly), AI handles rest
+- 3: Partially automated — regular human tasks (daily), but core ops are automated
+- 2: Heavily manual — most operations require human involvement
+- 1: Not automatable — human-intensive at every step
+
 ## Gate 2: Analysis Complete
 
 Verify all dimensions are scored:
@@ -198,6 +228,7 @@ Verify all dimensions are scored:
 - [ ] Market score assigned (1-5) — skip detailed for quick mode
 - [ ] Operational score assigned (1-5)
 - [ ] Schedule score assigned (1-5) with timeline
+- [ ] Automation score assigned (1-5) with component table
 - [ ] Confidence level noted for each score (Low / Medium / High)
 
 Do not proceed until all scores are assigned.
@@ -219,11 +250,12 @@ Output: Risk matrix table sorted by risk score (highest first).
 ## Phase 5: Synthesis and Recommendation
 
 1. Calculate weighted overall score:
-   - Technical: 25% weight
-   - Economic: 25% weight
-   - Market: 20% weight
-   - Operational: 15% weight
-   - Schedule: 15% weight
+   - Technical: 20% weight
+   - Economic: 20% weight
+   - Market: 15% weight
+   - Operational: 10% weight
+   - Schedule: 10% weight
+   - Automation: 25% weight
 
 2. Map to recommendation:
    - Score >= 3.5: **GO** — proceed with development
@@ -262,6 +294,7 @@ Print the following formatted summary directly to the user:
 | Market       | {X}/5 | {L/M/H}    | {one-line finding}                 |
 | Operational  | {X}/5 | {L/M/H}    | {one-line finding}                 |
 | Schedule     | {X}/5 | {L/M/H}    | {one-line finding}                 |
+| Automation   | {X}/5 | {L/M/H}    | {one-line finding}                 |
 | **Overall**  | **{X.X}/5** |     |                                    |
 
 ### Key Numbers

@@ -151,7 +151,28 @@ reader should understand the conclusion from this paragraph alone.}
 
 ---
 
-## 7. Risk Assessment
+## 7. Automation Feasibility — {Score}/5 (Confidence: {L/M/H})
+
+**Solo Operator Viability:** {Yes at any scale | Yes up to $XM ARR | Risky | No}
+
+**Component Automation Audit:**
+| Function                    | Level | Classification        | Notes                      |
+|-----------------------------|-------|-----------------------|----------------------------|
+| {function}                  | {A-E} | {classification}      | {what makes it A/B/C/D/E}  |
+
+**Self-Validating Loops:**
+{For any AI-automated components, describe the validation loop and ground truth sources}
+
+**Human Intervention Points:**
+{List remaining points where a human must intervene, frequency, and time per intervention}
+
+**Revenue per Human-Hour:** ${X}/hour at projected Year 2 revenue
+
+**Assessment:** {One paragraph explaining the score}
+
+---
+
+## 8. Risk Assessment
 
 | # | Risk                  | Category   | L | I | Score | Class    | Mitigation                |
 |---|-----------------------|------------|---|---|-------|----------|---------------------------|
@@ -169,11 +190,12 @@ reader should understand the conclusion from this paragraph alone.}
 
 | Dimension    | Score | Weight | Weighted |
 |--------------|-------|--------|----------|
-| Technical    | {X}/5 | 25%    | {X.XX}   |
-| Economic     | {X}/5 | 25%    | {X.XX}   |
-| Market       | {X}/5 | 20%    | {X.XX}   |
-| Operational  | {X}/5 | 15%    | {X.XX}   |
-| Schedule     | {X}/5 | 15%    | {X.XX}   |
+| Technical    | {X}/5 | 20%    | {X.XX}   |
+| Economic     | {X}/5 | 20%    | {X.XX}   |
+| Market       | {X}/5 | 15%    | {X.XX}   |
+| Operational  | {X}/5 | 10%    | {X.XX}   |
+| Schedule     | {X}/5 | 10%    | {X.XX}   |
+| Automation   | {X}/5 | 25%    | {X.XX}   |
 | **Total**    |       | 100%   | **{X.XX}** |
 
 {If CONDITIONAL GO: List the conditions that must be met}
