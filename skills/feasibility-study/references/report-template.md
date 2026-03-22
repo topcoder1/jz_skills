@@ -182,7 +182,7 @@ reader should understand the conclusion from this paragraph alone.}
 
 ---
 
-## 8. Recommendation
+## 9. Recommendation
 
 ### Verdict: {GO | NO-GO | CONDITIONAL GO}
 
