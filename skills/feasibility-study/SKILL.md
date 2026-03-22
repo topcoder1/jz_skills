@@ -116,14 +116,28 @@ Read `references/cost-estimation.md` for frameworks and rate cards.
 **For standard mode**: Use function point estimation.
 **For deep mode**: Run `scripts/estimate.py` with COCOMO parameters.
 
-Estimate:
-- **Development cost**: Broken down by component/phase
-- **Team composition**: Roles needed, headcount, duration
+Estimate three separate dimensions:
+1. **Effort** (person-months): Total work regardless of who does it
+2. **Calendar time** (months): Wall-clock time based on team size
+3. **Cash cost** ($): Actual money spent — founder sweat equity = $0
+
+Break down by:
+- **Development effort**: By component/phase, with AI adjustment
+- **Team composition**: Founders (sweat equity) vs. contractors (cash cost)
 - **Infrastructure cost**: Monthly/annual hosting, third-party services
 - **Operating cost**: Year 1, Year 2, Year 3 projections
 - **Hidden costs**: Walk through the hidden costs checklist (mandatory)
 - **Revenue projection**: Based on business model and market size
 - **ROI analysis**: Payback period, 3-year ROI
+
+Script supports team configuration:
+```bash
+# Solo founder + Claude Code, no cash cost
+echo '{"operation": "function_points", "unadjusted_fp": 200, "ai_level": "very_high", "contractor_count": 0}' | python3 ${CLAUDE_SKILL_DIR}/scripts/estimate.py
+
+# Founder + 1 contractor at $10K/mo
+echo '{"operation": "function_points", "unadjusted_fp": 200, "ai_level": "high", "contractor_count": 1, "contractor_rate": 10000}' | python3 ${CLAUDE_SKILL_DIR}/scripts/estimate.py
+```
 
 All estimation script operations support AI productivity adjustment. Always
 ask the user about their AI tooling and apply the appropriate multiplier:
@@ -251,11 +265,14 @@ Print the following formatted summary directly to the user:
 | **Overall**  | **{X.X}/5** |     |                                    |
 
 ### Key Numbers
-- **Development effort:** {range} person-months ({with AI adjustment note})
-- **Development cost:** ${range}
-- **Time to MVP:** {range}
+- **Effort:** {X} person-months ({AI level}, {reduction}% AI reduction)
+- **Calendar time:** {X} months (with {N} developer(s))
+- **Cash cost:** ${X} (development labor + tools, excludes infra)
 - **Annual operating cost:** ${range} (Year 1)
 - **Payback period:** {range}
+
+Note: Effort = total work. Calendar time = wall-clock months (depends on
+team size). Cash cost = actual money spent (sweat equity = $0).
 
 ### Top 3 Risks
 1. {risk} (Score: {X}) — {mitigation}

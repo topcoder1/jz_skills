@@ -1,5 +1,49 @@
 # Cost Estimation Frameworks
 
+## The Three Estimation Dimensions
+
+Always estimate and present these three separately — they tell very different
+stories depending on team composition:
+
+| Dimension        | What It Measures                             | Example                    |
+|------------------|----------------------------------------------|----------------------------|
+| **Effort**       | Total person-months of work needed           | 16 person-months           |
+| **Calendar time**| Wall-clock months to completion              | 16 months (solo) or 9 months (2 devs) |
+| **Cash cost**    | Actual money spent (sweat equity = $0)       | $5K (solo+AI) or $136K (with contractor) |
+
+### Why This Matters
+
+A solo founder with Claude Code might have:
+- High effort (16 person-months)
+- Long calendar time (16 months — one person doing everything)
+- Near-zero cash cost ($5K for AI tools)
+
+The same project with a contractor:
+- Similar effort (23 person-months — less AI leverage)
+- Shorter calendar time (13 months — two people in parallel)
+- High cash cost ($136K — contractor salary)
+
+**Always ask during Discovery:** Is the user optimizing for speed (hire help)
+or cash (sweat equity + AI)? This changes the entire cost picture.
+
+### Calendar Time Calculation
+
+```
+effective_team = 1 + (additional_devs × 0.75)    # Brooks's law: 75% efficiency per added dev
+calendar_months = effort_person_months / effective_team
+```
+
+### Cash Cost Calculation
+
+```
+cash_cost = (contractor_count × contractor_rate × calendar_months)
+          + (founder_salary × calendar_months)    # $0 if sweat equity
+          + (ai_tools_monthly × calendar_months)  # ~$350/mo for Claude + Copilot
+```
+
+Note: cash_cost covers development labor + tools only. Infrastructure, SaaS,
+and hidden costs are separate line items.
+
 ## T-shirt Sizing (Quick Mode)
 
 Fast estimation for initial viability checks. Map complexity and team size

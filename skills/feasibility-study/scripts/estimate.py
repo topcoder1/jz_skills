@@ -47,6 +47,62 @@ MONTHLY_RATES = {
     "blended_mixed": 10000, # US leads + offshore devs
 }
 
+# Monthly costs that are cash-only (no salary, just tools and services)
+SOLO_FOUNDER_MONTHLY_COSTS = {
+    "ai_tools": 300,       # Claude Max + Copilot
+    "cloud_dev": 50,       # Dev environment, CI/CD
+}
+
+
+def compute_three_dimensions(effort_pm, data):
+    """
+    Compute the three estimation dimensions from effort in person-months.
+
+    Input fields from data:
+      developers: number of developers (default: inferred from effort)
+      founder_salary: monthly salary to count as cash cost (default: 0 = sweat equity)
+      contractor_count: number of paid contractors (default: 0)
+      contractor_rate: monthly rate per contractor (default: 10000)
+
+    Returns dict with:
+      effort: total person-months of work (regardless of who does it)
+      calendar_months: wall-clock time based on team size
+      cash_cost: actual money spent (sweat equity = $0)
+    """
+    developers = data.get("developers")
+    founder_salary = data.get("founder_salary", 0)
+    contractor_count = data.get("contractor_count", 0)
+    contractor_rate = data.get("contractor_rate", 10000)
+
+    # Total team size
+    total_devs = developers if developers else max(1, contractor_count + 1)
+
+    # Calendar time = effort / team size, with a floor (can't parallelize everything)
+    parallel_efficiency = 0.75 if total_devs > 1 else 1.0  # Brooks's law discount
+    effective_devs = 1 + (total_devs - 1) * parallel_efficiency if total_devs > 1 else 1
+    calendar_months = effort_pm / effective_devs
+
+    # Cash cost = contractor costs + AI tools + founder salary (if any)
+    ai_monthly = sum(SOLO_FOUNDER_MONTHLY_COSTS.values())
+    contractor_total = contractor_count * contractor_rate * calendar_months
+    founder_total = founder_salary * calendar_months
+    cash_cost = contractor_total + founder_total + (ai_monthly * calendar_months)
+
+    return {
+        "effort_person_months": round(effort_pm, 1),
+        "calendar_months": round(calendar_months, 1),
+        "cash_cost": round(cash_cost),
+        "team": {
+            "total_developers": total_devs,
+            "founders": 1,
+            "contractors": contractor_count,
+            "founder_monthly_salary": founder_salary,
+            "contractor_monthly_rate": contractor_rate,
+            "ai_tools_monthly": ai_monthly,
+        },
+        "note": "cash_cost excludes infrastructure/SaaS — development labor + tools only",
+    }
+
 # --- T-shirt Sizing Parameters ---
 
 TSHIRT_ESTIMATES = {
@@ -164,13 +220,17 @@ def cocomo(data):
     for region, rate in MONTHLY_RATES.items():
         costs[region] = round(effort_pm * rate)
 
+    three_d = compute_three_dimensions(effort_pm, data)
+
     result = {
         "effort_person_months": round(effort_pm, 1),
-        "schedule_months": round(schedule_months, 1),
-        "team_size": round(team_size, 1),
+        "schedule_months": three_d["calendar_months"],
+        "team_size": three_d["team"]["total_developers"],
+        "cash_cost": three_d["cash_cost"],
         "kloc": kloc,
         "mode": mode,
         "eaf": eaf,
+        "three_dimensions": three_d,
         "cost_by_region": costs,
     }
     if ai_info.get("ai_assisted"):
@@ -210,6 +270,8 @@ def function_points(data):
         hourly = monthly_rate / 160
         costs[region] = round(effort_hours * hourly)
 
+    three_d = compute_three_dimensions(effort_pm, data)
+
     result = {
         "unadjusted_fp": ufp,
         "vaf": vaf,
@@ -217,6 +279,9 @@ def function_points(data):
         "hours_per_fp": hours_per_fp,
         "effort_hours": round(effort_hours),
         "effort_person_months": round(effort_pm, 1),
+        "calendar_months": three_d["calendar_months"],
+        "cash_cost": three_d["cash_cost"],
+        "three_dimensions": three_d,
         "cost_by_region": costs,
     }
     if ai_info.get("ai_assisted"):
