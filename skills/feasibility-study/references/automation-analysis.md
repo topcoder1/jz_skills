@@ -13,19 +13,20 @@ isn't just "can we build it?" but "can we build it so it runs itself?"
 
 For every operational function, classify its automation level:
 
-| Level | Classification        | Description                                       | Example                              |
-|-------|-----------------------|---------------------------------------------------|--------------------------------------|
-| A     | Fully Automatable     | Runs unattended, self-heals on failure            | Scheduled web crawler                |
+| Level | Classification        | Description                                       | Example                                     |
+| ----- | --------------------- | ------------------------------------------------- | ------------------------------------------- |
+| A     | Fully Automatable     | Runs unattended, self-heals on failure            | Scheduled web crawler                       |
 | B     | AI-Automatable        | AI handles decisions, human reviews occasionally  | Fingerprint generation with validation loop |
-| C     | Partially Automatable | Core is automated, edge cases need human          | Anti-bot detection changes           |
-| D     | Human-Assisted        | Automation handles routine, human handles complex | Customer support escalations         |
-| E     | Requires Human        | Cannot be automated with current technology       | Legal negotiations, strategic pivots |
+| C     | Partially Automatable | Core is automated, edge cases need human          | Anti-bot detection changes                  |
+| D     | Human-Assisted        | Automation handles routine, human handles complex | Customer support escalations                |
+| E     | Requires Human        | Cannot be automated with current technology       | Legal negotiations, strategic pivots        |
 
 ### Standard Product Functions to Audit
 
 For each, assign a level (A-E) and note what makes it automatable or not:
 
 **Data Pipeline:**
+
 - [ ] Data collection / crawling / scraping
 - [ ] Data processing / transformation
 - [ ] Data validation / quality checks
@@ -33,6 +34,7 @@ For each, assign a level (A-E) and note what makes it automatable or not:
 - [ ] Data freshness / re-processing schedules
 
 **Product Core:**
+
 - [ ] Core algorithm / detection / analysis
 - [ ] Pattern/signature/model updates
 - [ ] Quality assurance of outputs
@@ -40,6 +42,7 @@ For each, assign a level (A-E) and note what makes it automatable or not:
 - [ ] Search and query processing
 
 **Customer Lifecycle:**
+
 - [ ] Marketing site and SEO
 - [ ] User onboarding (signup → first value)
 - [ ] Billing and subscription management
@@ -50,6 +53,7 @@ For each, assign a level (A-E) and note what makes it automatable or not:
 - [ ] Churn prevention and re-engagement
 
 **Infrastructure & Ops:**
+
 - [ ] Deployment and releases
 - [ ] Monitoring and alerting
 - [ ] Auto-scaling
@@ -59,6 +63,7 @@ For each, assign a level (A-E) and note what makes it automatable or not:
 - [ ] Log rotation and cleanup
 
 **Business Operations:**
+
 - [ ] Financial reporting / bookkeeping
 - [ ] Tax compliance
 - [ ] Legal compliance (privacy policy, ToS updates)
@@ -92,27 +97,27 @@ loop that eliminates human review:
 
 ### Ground Truth Sources (no human needed)
 
-| Source Type                    | Example                                              |
-|--------------------------------|------------------------------------------------------|
-| Vendor customer directories    | "Built with Shopify" pages, Stripe customer logos     |
-| Package manifests              | package.json, requirements.txt in public GitHub repos |
-| Competitor public data         | BuiltWith free single-site lookup as benchmark        |
-| Synthetic test sites           | Deploy known stacks on test domains, verify detection |
-| Historical data                | Previously validated fingerprints as regression tests |
-| Community datasets             | Open-source fingerprint DBs (Wappalyzer, WhatWeb)    |
+| Source Type                 | Example                                               |
+| --------------------------- | ----------------------------------------------------- |
+| Vendor customer directories | "Built with Shopify" pages, Stripe customer logos     |
+| Package manifests           | package.json, requirements.txt in public GitHub repos |
+| Competitor public data      | BuiltWith free single-site lookup as benchmark        |
+| Synthetic test sites        | Deploy known stacks on test domains, verify detection |
+| Historical data             | Previously validated fingerprints as regression tests |
+| Community datasets          | Open-source fingerprint DBs (Wappalyzer, WhatWeb)     |
 
 ## Solo Operator Viability Assessment
 
 A product is "solo-operable at scale" when:
 
-| Criteria                              | Threshold                              |
-|---------------------------------------|----------------------------------------|
-| Daily human time required             | < 1 hour/day at 10K customers          |
-| Human intervention frequency          | < 1x/week for non-routine issues       |
-| Customer support ratio                | < 5 tickets/week requiring human response |
-| Deployment                            | Fully automated (CI/CD, zero-downtime) |
-| Monitoring                            | Alert-based, not active watching       |
-| Revenue per human-hour                | > $500/hour of human involvement       |
+| Criteria                     | Threshold                                 |
+| ---------------------------- | ----------------------------------------- |
+| Daily human time required    | < 1 hour/day at 10K customers             |
+| Human intervention frequency | < 1x/week for non-routine issues          |
+| Customer support ratio       | < 5 tickets/week requiring human response |
+| Deployment                   | Fully automated (CI/CD, zero-downtime)    |
+| Monitoring                   | Alert-based, not active watching          |
+| Revenue per human-hour       | > $500/hour of human involvement          |
 
 ### Revenue per Human-Hour Calculation
 
@@ -144,10 +149,10 @@ Watch for these patterns that limit automation:
 
 ## Automation Score Interpretation
 
-| Score | Meaning                                    | Solo Operator? |
-|-------|--------------------------------------------|----------------|
-| 5     | Fully automated end-to-end                 | Yes — at any scale |
-| 4     | 1-2 human touchpoints, rest automated      | Yes — up to ~$5M ARR |
-| 3     | Daily human tasks, but core is automated   | Yes — up to ~$500K ARR |
-| 2     | Significant manual operations              | Risky — needs at least 2-3 people |
-| 1     | Human-intensive at every step              | No — requires proportional headcount |
+| Score | Meaning                                  | Solo Operator?                       |
+| ----- | ---------------------------------------- | ------------------------------------ |
+| 5     | Fully automated end-to-end               | Yes — at any scale                   |
+| 4     | 1-2 human touchpoints, rest automated    | Yes — up to ~$5M ARR                 |
+| 3     | Daily human tasks, but core is automated | Yes — up to ~$500K ARR               |
+| 2     | Significant manual operations            | Risky — needs at least 2-3 people    |
+| 1     | Human-intensive at every step            | No — requires proportional headcount |
