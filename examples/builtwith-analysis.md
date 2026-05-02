@@ -42,12 +42,14 @@ This study analyzes the feasibility of building a BuiltWith.com competitor — a
 | Auth | 1 | Buy | Clerk/Auth0 |
 
 **Technology Stack Recommendation:**
+
 - Frontend: Next.js (web app + marketing site), Chrome extension (Manifest V3)
 - Backend: Python (FastAPI) for crawling + detection, Node.js for API layer
 - Database: PostgreSQL (primary), Elasticsearch (search/lookup), Redis (cache + queue)
 - Infrastructure: AWS (EC2 spot instances for crawling, S3 for storage, CloudFront CDN)
 
 **Technical Risks:**
+
 - Web crawling at scale is the hardest engineering problem — anti-bot detection, proxy management, and rate limiting make crawling millions of sites extremely challenging
 - Maintaining 10K+ technology signatures requires continuous curation as libraries evolve
 - BuiltWith uses server-side crawling which misses client-side JS frameworks; rendering pages at scale (headless browser) is 10-100x more expensive
@@ -61,15 +63,15 @@ This study analyzes the feasibility of building a BuiltWith.com competitor — a
 
 ### Development Cost Estimate
 
-| Phase / Component | Effort (person-months) | Cost Range (USD) |
-|---|---|---|
-| Crawling infrastructure | 8-12 | $32K-$60K |
-| Detection engine + fingerprint DB | 6-8 | $24K-$40K |
-| API + backend services | 4-6 | $16K-$30K |
-| Web dashboard + UX | 4-6 | $16K-$30K |
-| Browser extension | 1-2 | $4K-$10K |
-| Auth, payments, infra setup | 2-3 | $8K-$15K |
-| **Total** | **25-37** | **$100K-$185K** |
+| Phase / Component                 | Effort (person-months) | Cost Range (USD) |
+| --------------------------------- | ---------------------- | ---------------- |
+| Crawling infrastructure           | 8-12                   | $32K-$60K        |
+| Detection engine + fingerprint DB | 6-8                    | $24K-$40K        |
+| API + backend services            | 4-6                    | $16K-$30K        |
+| Web dashboard + UX                | 4-6                    | $16K-$30K        |
+| Browser extension                 | 1-2                    | $4K-$10K         |
+| Auth, payments, infra setup       | 2-3                    | $8K-$15K         |
+| **Total**                         | **25-37**              | **$100K-$185K**  |
 
 **Estimation Method:** Function Points (320 UFP, VAF 1.15, complex = 7,360 effort-hours). Adjusted down 40-50% for AI-assisted development with a bootstrapped team (AI coding assistants significantly accelerate solo/small-team velocity on well-understood patterns).
 
@@ -77,21 +79,21 @@ This study analyzes the feasibility of building a BuiltWith.com competitor — a
 
 ### Team Composition
 
-| Role | Count | Duration | Monthly Cost |
-|---|---|---|---|
-| Full-stack developer (founder) | 1 | 9-12 months | $0 (sweat equity) |
-| Backend/infra developer | 1 | 6-9 months | $8K-$12K (contract) |
-| AI coding assistants (Claude, Copilot) | — | Ongoing | $200-$400/mo |
+| Role                                   | Count | Duration    | Monthly Cost        |
+| -------------------------------------- | ----- | ----------- | ------------------- |
+| Full-stack developer (founder)         | 1     | 9-12 months | $0 (sweat equity)   |
+| Backend/infra developer                | 1     | 6-9 months  | $8K-$12K (contract) |
+| AI coding assistants (Claude, Copilot) | —     | Ongoing     | $200-$400/mo        |
 
 ### Operating Costs (Annual)
 
-| Category | Year 1 | Year 2 | Year 3 |
-|---|---|---|---|
-| Infrastructure (crawling + hosting) | $24,000 | $36,000 | $54,000 |
-| SaaS Tooling (auth, monitoring, email) | $3,600 | $5,400 | $8,100 |
-| Proxy services (for crawling) | $6,000 | $12,000 | $24,000 |
-| Support/Ops | $6,000 | $9,000 | $13,500 |
-| **Total** | **$39,600** | **$62,400** | **$99,600** |
+| Category                               | Year 1      | Year 2      | Year 3      |
+| -------------------------------------- | ----------- | ----------- | ----------- |
+| Infrastructure (crawling + hosting)    | $24,000     | $36,000     | $54,000     |
+| SaaS Tooling (auth, monitoring, email) | $3,600      | $5,400      | $8,100      |
+| Proxy services (for crawling)          | $6,000      | $12,000     | $24,000     |
+| Support/Ops                            | $6,000      | $9,000      | $13,500     |
+| **Total**                              | **$39,600** | **$62,400** | **$99,600** |
 
 Note: Proxy costs are a significant hidden cost for web crawling at scale — residential proxies at volume run $5-20 per GB.
 
@@ -114,11 +116,11 @@ Note: Proxy costs are a significant hidden cost for web crawling at scale — re
 
 Assuming SaaS model at $99-$495/month, targeting niche vertical:
 
-| Scenario | Year 1 | Year 2 | Year 3 |
-|---|---|---|---|
-| Conservative (10 customers by EOY1) | $30,000 | $90,000 | $180,000 |
-| Base case (20 customers by EOY1) | $60,000 | $150,000 | $300,000 |
-| Optimistic (40 customers by EOY1) | $120,000 | $300,000 | $600,000 |
+| Scenario                            | Year 1   | Year 2   | Year 3   |
+| ----------------------------------- | -------- | -------- | -------- |
+| Conservative (10 customers by EOY1) | $30,000  | $90,000  | $180,000 |
+| Base case (20 customers by EOY1)    | $60,000  | $150,000 | $300,000 |
+| Optimistic (40 customers by EOY1)   | $120,000 | $300,000 | $600,000 |
 
 **ROI (3-year, base case):** ~breakeven at month 36
 **Payback Period:** 30-36 months (base case)
@@ -130,6 +132,7 @@ Assuming SaaS model at $99-$495/month, targeting niche vertical:
 ## 4. Market Feasibility — 3/5 (Confidence: Medium)
 
 **Market Size:**
+
 - TAM: ~$156M (B2B information services, technology detection segment)
 - SAM: ~$30M (companies specifically buying technographic data for sales/marketing)
 - SOM: ~$300K-$1M (realistic first 3-year capture as a niche entrant)
@@ -144,6 +147,7 @@ Assuming SaaS model at $99-$495/month, targeting niche vertical:
 | Bloomberry | Enterprise | Real-time signals, 1200+ B2B products | Enterprise pricing, narrow focus |
 
 **Differentiation:** A new entrant would need to find a niche BuiltWith underserves. Possible angles:
+
 - Vertical specialization (e.g., only e-commerce, only healthcare tech)
 - Better UX/developer experience (BuiltWith's UI is notoriously dated)
 - More affordable pricing for SMBs
@@ -169,6 +173,7 @@ Assuming SaaS model at $99-$495/month, targeting niche vertical:
 | Designer | 0.25 FTE | Contract/AI tools | Easy |
 
 **Key Operational Considerations:**
+
 - Technology fingerprint database requires continuous maintenance (5-10 hrs/week) as new technologies emerge and existing ones update
 - Crawler infrastructure requires active monitoring — anti-bot systems change frequently
 - Customer support is minimal at early stage (self-serve SaaS)
@@ -194,6 +199,7 @@ Assuming SaaS model at $99-$495/month, targeting niche vertical:
 **Critical Path:** Crawling infrastructure → Detection engine → Data pipeline → API → Dashboard. The crawler must work before anything else can be built.
 
 **Schedule Risks:**
+
 - Anti-bot detection could require weeks of iteration to achieve reliable crawling
 - Technology signature accuracy may need multiple rounds of tuning
 - Scope creep from "just one more feature" before launch
@@ -205,19 +211,20 @@ Assuming SaaS model at $99-$495/month, targeting niche vertical:
 
 ## 7. Risk Assessment
 
-| # | Risk | Category | L | I | Score | Class | Mitigation |
-|---|---|---|---|---|---|---|---|
-| 1 | Crawling blocked by anti-bot systems at scale | Technical | 4 | 4 | 16 | High | Start with easier-to-crawl sites; use proxy rotation; prototype early |
-| 2 | Infrastructure costs exceed budget at scale | Financial | 4 | 4 | 16 | High | Start niche (1-5M sites), use spot instances, optimize before scaling |
-| 3 | Cannot differentiate from BuiltWith/Wappalyzer | Market | 3 | 5 | 15 | High | Focus on vertical niche or superior UX; validate with 10 customers first |
-| 4 | Technology fingerprint maintenance unsustainable | Operational | 3 | 4 | 12 | High | Open-source the detection lib; build community; automate with AI |
-| 5 | Legal risk from web scraping ToS violations | Legal | 3 | 4 | 12 | High | Consult lawyer; respect robots.txt; crawl public data only |
-| 6 | Revenue ramp slower than projected | Financial | 3 | 3 | 9 | Medium | Keep day job/consulting during ramp; validate demand pre-build |
-| 7 | Data freshness insufficient for customers | Technical | 3 | 3 | 9 | Medium | Set expectations (weekly refresh), prioritize high-value domains |
-| 8 | Founder burnout from sustained solo effort | Operational | 3 | 3 | 9 | Medium | Set strict scope limits; automate operations; take breaks |
-| 9 | Detection accuracy below competitive threshold | Technical | 2 | 3 | 6 | Medium | Benchmark against BuiltWith/Wappalyzer; iterate on fingerprints |
+| #   | Risk                                             | Category    | L   | I   | Score | Class  | Mitigation                                                               |
+| --- | ------------------------------------------------ | ----------- | --- | --- | ----- | ------ | ------------------------------------------------------------------------ |
+| 1   | Crawling blocked by anti-bot systems at scale    | Technical   | 4   | 4   | 16    | High   | Start with easier-to-crawl sites; use proxy rotation; prototype early    |
+| 2   | Infrastructure costs exceed budget at scale      | Financial   | 4   | 4   | 16    | High   | Start niche (1-5M sites), use spot instances, optimize before scaling    |
+| 3   | Cannot differentiate from BuiltWith/Wappalyzer   | Market      | 3   | 5   | 15    | High   | Focus on vertical niche or superior UX; validate with 10 customers first |
+| 4   | Technology fingerprint maintenance unsustainable | Operational | 3   | 4   | 12    | High   | Open-source the detection lib; build community; automate with AI         |
+| 5   | Legal risk from web scraping ToS violations      | Legal       | 3   | 4   | 12    | High   | Consult lawyer; respect robots.txt; crawl public data only               |
+| 6   | Revenue ramp slower than projected               | Financial   | 3   | 3   | 9     | Medium | Keep day job/consulting during ramp; validate demand pre-build           |
+| 7   | Data freshness insufficient for customers        | Technical   | 3   | 3   | 9     | Medium | Set expectations (weekly refresh), prioritize high-value domains         |
+| 8   | Founder burnout from sustained solo effort       | Operational | 3   | 3   | 9     | Medium | Set strict scope limits; automate operations; take breaks                |
+| 9   | Detection accuracy below competitive threshold   | Technical   | 2   | 3   | 6     | Medium | Benchmark against BuiltWith/Wappalyzer; iterate on fingerprints          |
 
 **Red Flags Identified:**
+
 - [x] **Scope equals competitor**: Building the same thing as BuiltWith, not something clearly better — mitigate by choosing a differentiated niche
 - [x] **No unfair advantage**: Open-source fingerprinting is available to everyone — mitigate with execution speed, UX, or vertical focus
 - [x] **Linear scaling costs**: Crawling costs scale with number of sites crawled — mitigate with smart crawling (prioritize valuable domains)
@@ -230,27 +237,30 @@ Assuming SaaS model at $99-$495/month, targeting niche vertical:
 
 **Overall Score:** 2.6/5.0 (Confidence: Medium)
 
-| Dimension | Score | Weight | Weighted |
-|---|---|---|---|
-| Technical | 2/5 | 25% | 0.50 |
-| Economic | 3/5 | 25% | 0.75 |
-| Market | 3/5 | 20% | 0.60 |
-| Operational | 3/5 | 15% | 0.45 |
-| Schedule | 3/5 | 15% | 0.45 |
-| **Total** | | 100% | **2.75** |
+| Dimension   | Score | Weight | Weighted |
+| ----------- | ----- | ------ | -------- |
+| Technical   | 2/5   | 25%    | 0.50     |
+| Economic    | 3/5   | 25%    | 0.75     |
+| Market      | 3/5   | 20%    | 0.60     |
+| Operational | 3/5   | 15%    | 0.45     |
+| Schedule    | 3/5   | 15%    | 0.45     |
+| **Total**   |       | 100%   | **2.75** |
 
 **Conditions for GO:**
+
 1. **Validate demand first**: Talk to 10-20 potential customers before writing code. Confirm they would pay $99-$495/month and what specific data they need.
 2. **Prototype crawling in week 1**: Prove you can reliably crawl and detect technologies on 10K sites within budget before committing to the full build.
 3. **Choose a defensible niche**: Don't build a generic BuiltWith clone. Pick a vertical (e-commerce, healthcare, fintech) or angle (real-time alerts, CRM integration, developer-first API) that incumbents underserve.
 4. **Keep budget under $100K**: Use sweat equity + AI tools + selective contracting. If costs trend toward $150K+, re-evaluate.
 
 ### Key Assumptions
+
 1. AI-assisted development delivers 40-50% productivity gain (if not, timeline extends to 12-15 months and costs increase proportionally)
 2. Open-source crawling libraries and proxy services remain available and affordable
 3. At least 20 paying customers can be acquired within 12 months of launch via direct outreach and content marketing
 
 ### Recommended Next Steps
+
 1. **Customer discovery (2 weeks)**: Interview 15-20 B2B sales professionals who currently use BuiltWith or similar tools. Identify pain points and willingness to pay.
 2. **Technical prototype (4 weeks)**: Build a minimal crawler that detects tech stacks on 10K websites. Measure accuracy against BuiltWith results. Benchmark infrastructure costs.
 3. **Niche selection (1 week)**: Based on customer interviews, choose a vertical or angle to focus on.
@@ -264,6 +274,7 @@ Assuming SaaS model at $99-$495/month, targeting niche vertical:
 **Estimation Methodology:** Function Point Analysis (320 unadjusted function points, VAF 1.15, complex classification at 20 hours/FP = 7,360 effort-hours / 46 person-months). Adjusted by 40-50% AI productivity multiplier for bootstrapped team using AI coding assistants. TCO projected with 50% annual growth rate for infrastructure costs due to crawling scale requirements.
 
 **Data Sources:**
+
 - BuiltWith.com product analysis and public information
 - Wappalyzer documentation and open-source codebase
 - G2, Capterra, and TrustPilot reviews for competitive analysis
@@ -272,6 +283,7 @@ Assuming SaaS model at $99-$495/month, targeting niche vertical:
 - Open Tech Explorer (GitHub) for technical architecture reference
 
 **Assumptions Log:**
+
 - Founder contributes full-time development at $0 cash cost (sweat equity)
 - One contractor hired for 6-9 months at $8K-$12K/month
 - AI tools provide 40-50% productivity gain on standard development tasks
@@ -282,6 +294,7 @@ Assuming SaaS model at $99-$495/month, targeting niche vertical:
 - Technology fingerprint base from open-source Wappalyzer patterns (~4,000 technologies)
 
 **Confidence Notes:**
+
 - Technical score (2/5, Medium confidence): The crawling-at-scale challenge is well-documented but exact costs depend heavily on anti-bot landscape which changes. A 4-week prototype would raise confidence to High.
 - Economic score (3/5, Medium confidence): Cost estimates are reasonable but revenue projections are speculative until customer validation occurs. Customer interviews would raise confidence.
 - Market score (3/5, Medium confidence): Market size data comes from broad B2B intelligence category; the technology detection sub-segment is smaller but poorly measured.

@@ -43,6 +43,7 @@ TAM = All Possible Customers × ARPU × 12
 ### Direct Competitors
 
 Products that solve the same problem for the same user:
+
 - Name, URL, founding year
 - Pricing model and tiers
 - Key features (top 5-10)
@@ -53,25 +54,26 @@ Products that solve the same problem for the same user:
 ### Indirect Competitors
 
 Products that solve adjacent problems or serve the same user differently:
+
 - What alternatives do users currently use?
 - Manual processes or workarounds
 - Tangentially related tools
 
 ### Feature Comparison Matrix
 
-| Feature              | Our Product | Competitor A | Competitor B | Competitor C |
-|----------------------|-------------|--------------|--------------|--------------|
-| Core feature 1       | ?           | Y/N          | Y/N          | Y/N          |
-| Core feature 2       | ?           | Y/N          | Y/N          | Y/N          |
-| Pricing (starting)   | ?           | $XX/mo       | $XX/mo       | $XX/mo       |
-| Free tier            | ?           | Y/N          | Y/N          | Y/N          |
-| API access           | ?           | Y/N          | Y/N          | Y/N          |
-| Mobile support       | ?           | Y/N          | Y/N          | Y/N          |
+| Feature            | Our Product | Competitor A | Competitor B | Competitor C |
+| ------------------ | ----------- | ------------ | ------------ | ------------ |
+| Core feature 1     | ?           | Y/N          | Y/N          | Y/N          |
+| Core feature 2     | ?           | Y/N          | Y/N          | Y/N          |
+| Pricing (starting) | ?           | $XX/mo       | $XX/mo       | $XX/mo       |
+| Free tier          | ?           | Y/N          | Y/N          | Y/N          |
+| API access         | ?           | Y/N          | Y/N          | Y/N          |
+| Mobile support     | ?           | Y/N          | Y/N          | Y/N          |
 
 ### Pricing Comparison
 
 | Tier       | Our Product | Competitor A | Competitor B | Competitor C |
-|------------|-------------|--------------|--------------|--------------|
+| ---------- | ----------- | ------------ | ------------ | ------------ |
 | Free       |             |              |              |              |
 | Starter    |             |              |              |              |
 | Pro        |             |              |              |              |
@@ -92,44 +94,44 @@ Products that solve adjacent problems or serve the same user differently:
 
 ### Moat Classification
 
-| Level   | Description                                          | Duration    |
-|---------|------------------------------------------------------|-------------|
-| None    | Features easily replicated, no switching costs       | 0-6 months  |
-| Shallow | Some differentiation, but competitors can catch up   | 6-18 months |
-| Deep    | Significant structural advantage, hard to replicate  | 18+ months  |
+| Level   | Description                                         | Duration    |
+| ------- | --------------------------------------------------- | ----------- |
+| None    | Features easily replicated, no switching costs      | 0-6 months  |
+| Shallow | Some differentiation, but competitors can catch up  | 6-18 months |
+| Deep    | Significant structural advantage, hard to replicate | 18+ months  |
 
 ## Business Model Archetypes
 
-| Model         | Revenue Source          | Key Metric        | Typical Margin |
-|---------------|-------------------------|--------------------|----------------|
-| SaaS          | Monthly/annual subs     | MRR, churn rate    | 70-85%         |
-| Marketplace   | Transaction fees        | GMV, take rate     | 10-30%         |
-| Usage-based   | Per-unit consumption    | Usage volume       | 50-80%         |
-| Freemium      | Upgrade from free tier  | Conversion rate    | 70-85%         |
-| Enterprise    | Annual contracts        | ACV, NRR           | 75-90%         |
-| Data/API      | API calls or data access| API volume         | 60-80%         |
-| Advertising   | Ad impressions/clicks   | DAU, CPM           | 40-60%         |
+| Model       | Revenue Source           | Key Metric      | Typical Margin |
+| ----------- | ------------------------ | --------------- | -------------- |
+| SaaS        | Monthly/annual subs      | MRR, churn rate | 70-85%         |
+| Marketplace | Transaction fees         | GMV, take rate  | 10-30%         |
+| Usage-based | Per-unit consumption     | Usage volume    | 50-80%         |
+| Freemium    | Upgrade from free tier   | Conversion rate | 70-85%         |
+| Enterprise  | Annual contracts         | ACV, NRR        | 75-90%         |
+| Data/API    | API calls or data access | API volume      | 60-80%         |
+| Advertising | Ad impressions/clicks    | DAU, CPM        | 40-60%         |
 
 ## Unit Economics Template
 
-| Metric                              | Value     | Benchmark    |
-|--------------------------------------|-----------|--------------|
-| Customer Acquisition Cost (CAC)      | $         | Varies       |
-| Lifetime Value (LTV)                 | $         | > 3x CAC     |
-| LTV:CAC Ratio                        |           | > 3:1        |
-| Monthly churn rate                   | %         | < 5% (SMB), < 1% (Enterprise) |
-| Payback period                       | months    | < 12 months  |
-| Average Revenue Per User (ARPU)      | $/month   |              |
-| Gross margin                         | %         | > 70% (SaaS) |
-| Net Revenue Retention (NRR)          | %         | > 100%       |
+| Metric                          | Value   | Benchmark                     |
+| ------------------------------- | ------- | ----------------------------- |
+| Customer Acquisition Cost (CAC) | $       | Varies                        |
+| Lifetime Value (LTV)            | $       | > 3x CAC                      |
+| LTV:CAC Ratio                   |         | > 3:1                         |
+| Monthly churn rate              | %       | < 5% (SMB), < 1% (Enterprise) |
+| Payback period                  | months  | < 12 months                   |
+| Average Revenue Per User (ARPU) | $/month |                               |
+| Gross margin                    | %       | > 70% (SaaS)                  |
+| Net Revenue Retention (NRR)     | %       | > 100%                        |
 
 ## Market Timing Assessment
 
-| Signal                            | Too Early       | Right Time        | Too Late          |
-|-----------------------------------|-----------------|-------------------|-------------------|
-| User awareness of the problem     | Low             | Growing           | Saturated         |
-| Existing solutions                | None/primitive  | Some, with gaps   | Many, mature      |
-| Enabling technology               | Not ready       | Just ready        | Commoditized      |
-| Regulatory environment            | Unclear         | Favorable         | Restrictive       |
-| Recent funding in the space       | None            | Growing           | Declining         |
-| Customer willingness to pay       | Skeptical       | Willing           | Demanding/cheap   |
+| Signal                        | Too Early      | Right Time      | Too Late        |
+| ----------------------------- | -------------- | --------------- | --------------- |
+| User awareness of the problem | Low            | Growing         | Saturated       |
+| Existing solutions            | None/primitive | Some, with gaps | Many, mature    |
+| Enabling technology           | Not ready      | Just ready      | Commoditized    |
+| Regulatory environment        | Unclear        | Favorable       | Restrictive     |
+| Recent funding in the space   | None           | Growing         | Declining       |
+| Customer willingness to pay   | Skeptical      | Willing         | Demanding/cheap |

@@ -3,6 +3,7 @@
 A Claude Code skill that performs comprehensive product feasibility studies with effort and cost estimation.
 
 Analyzes any product idea or existing product across five dimensions using the **TELOS framework**:
+
 - **Technical** — Architecture complexity, tech stack, scalability
 - **Economic** — Development cost, operating cost, ROI, hidden costs
 - **Legal/Compliance** — Regulatory, IP, data privacy
@@ -47,15 +48,16 @@ ln -s /path/to/jz_skills/skills/feasibility-study /your-project/.claude/skills/f
 
 ### Depth Modes
 
-| Mode       | Scope                                     | Estimation Method  | Speed    |
-|------------|-------------------------------------------|--------------------|----------|
-| `quick`    | Technical + Economic only, skip research  | T-shirt sizing     | ~5 min   |
-| `standard` | Full TELOS analysis with research         | Function points    | ~15 min  |
-| `deep`     | Full TELOS + detailed TCO + market sizing | COCOMO II          | ~30 min  |
+| Mode       | Scope                                     | Estimation Method | Speed   |
+| ---------- | ----------------------------------------- | ----------------- | ------- |
+| `quick`    | Technical + Economic only, skip research  | T-shirt sizing    | ~5 min  |
+| `standard` | Full TELOS analysis with research         | Function points   | ~15 min |
+| `deep`     | Full TELOS + detailed TCO + market sizing | COCOMO II         | ~30 min |
 
 ### Input
 
 You can provide:
+
 - A **URL** of an existing product to analyze (e.g., `BuiltWith.com`)
 - A **product description** in quotes (e.g., `"AI-powered code review tool"`)
 - A **combination** of both
@@ -71,6 +73,7 @@ feasibility-report-{product-name}-{YYYY-MM-DD}.md
 ```
 
 The report includes:
+
 - Executive summary with GO/NO-GO recommendation
 - Scores (1-5) for each TELOS dimension with evidence
 - Development cost estimate with team composition

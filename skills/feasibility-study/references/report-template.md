@@ -39,9 +39,10 @@ reader should understand the conclusion from this paragraph alone.}
 **Core Components:**
 | Component | Complexity (1-5) | Build vs. Buy | Notes |
 |-----------|-------------------|---------------|-------|
-| {name}    | {score}           | {Build/Buy}   | {note}|
+| {name} | {score} | {Build/Buy} | {note}|
 
 **Technology Stack Recommendation:**
+
 - Frontend: {recommendation}
 - Backend: {recommendation}
 - Database: {recommendation}
@@ -57,27 +58,27 @@ reader should understand the conclusion from this paragraph alone.}
 
 ### Development Cost Estimate
 
-| Phase / Component  | Effort (person-months) | Cost Range (USD)  |
-|--------------------|------------------------|-------------------|
-| {phase/component}  | {X-Y}                 | ${min}-${max}     |
-| **Total**          | **{X-Y}**             | **${min}-${max}** |
+| Phase / Component | Effort (person-months) | Cost Range (USD)  |
+| ----------------- | ---------------------- | ----------------- |
+| {phase/component} | {X-Y}                  | ${min}-${max}     |
+| **Total**         | **{X-Y}**              | **${min}-${max}** |
 
 **Estimation Method:** {T-shirt | Function Points | COCOMO II}
 
 ### Team Composition
 
-| Role              | Count | Duration  | Monthly Cost |
-|-------------------|-------|-----------|--------------|
-| {role}            | {n}   | {months}  | ${cost}      |
+| Role   | Count | Duration | Monthly Cost |
+| ------ | ----- | -------- | ------------ |
+| {role} | {n}   | {months} | ${cost}      |
 
 ### Operating Costs (Annual)
 
-| Category          | Year 1       | Year 2       | Year 3       |
-|-------------------|--------------|--------------|--------------|
-| Infrastructure    | ${amount}    | ${amount}    | ${amount}    |
-| SaaS Tooling      | ${amount}    | ${amount}    | ${amount}    |
-| Support/Ops       | ${amount}    | ${amount}    | ${amount}    |
-| **Total**         | **${total}** | **${total}** | **${total}** |
+| Category       | Year 1       | Year 2       | Year 3       |
+| -------------- | ------------ | ------------ | ------------ |
+| Infrastructure | ${amount}    | ${amount}    | ${amount}    |
+| SaaS Tooling   | ${amount}    | ${amount}    | ${amount}    |
+| Support/Ops    | ${amount}    | ${amount}    | ${amount}    |
+| **Total**      | **${total}** | **${total}** | **${total}** |
 
 ### Hidden Costs Identified
 
@@ -85,11 +86,11 @@ reader should understand the conclusion from this paragraph alone.}
 
 ### Revenue Projection
 
-| Scenario      | Year 1      | Year 2       | Year 3       |
-|---------------|-------------|--------------|--------------|
-| Conservative  | ${amount}   | ${amount}    | ${amount}    |
-| Base case     | ${amount}   | ${amount}    | ${amount}    |
-| Optimistic    | ${amount}   | ${amount}    | ${amount}    |
+| Scenario     | Year 1    | Year 2    | Year 3    |
+| ------------ | --------- | --------- | --------- |
+| Conservative | ${amount} | ${amount} | ${amount} |
+| Base case    | ${amount} | ${amount} | ${amount} |
+| Optimistic   | ${amount} | ${amount} | ${amount} |
 
 **ROI (3-year, base case):** {X}%
 **Payback Period:** {X} months
@@ -101,14 +102,15 @@ reader should understand the conclusion from this paragraph alone.}
 ## 4. Market Feasibility — {Score}/5 (Confidence: {L/M/H})
 
 **Market Size:**
+
 - TAM: ${amount}
 - SAM: ${amount}
 - SOM: ${amount}
 
 **Competitive Landscape:**
-| Competitor    | Pricing     | Key Strength       | Key Weakness        |
+| Competitor | Pricing | Key Strength | Key Weakness |
 |---------------|-------------|--------------------|--------------------|
-| {name}        | ${pricing}  | {strength}         | {weakness}          |
+| {name} | ${pricing} | {strength} | {weakness} |
 
 **Differentiation:** {What makes this product different}
 **Moat Assessment:** {None | Shallow | Deep} — {justification}
@@ -121,9 +123,9 @@ reader should understand the conclusion from this paragraph alone.}
 ## 5. Operational Feasibility — {Score}/5 (Confidence: {L/M/H})
 
 **Team Requirements:**
-| Role                  | Needed | Availability | Hiring Difficulty |
+| Role | Needed | Availability | Hiring Difficulty |
 |-----------------------|--------|--------------|-------------------|
-| {role}                | {n}    | {status}     | {Easy/Med/Hard}   |
+| {role} | {n} | {status} | {Easy/Med/Hard} |
 
 **Key Operational Considerations:**
 {Bullet list of process, support, and organizational factors}
@@ -135,14 +137,14 @@ reader should understand the conclusion from this paragraph alone.}
 ## 6. Schedule Feasibility — {Score}/5 (Confidence: {L/M/H})
 
 **Phase Breakdown:**
-| Phase          | Duration      | Key Deliverables              |
+| Phase | Duration | Key Deliverables |
 |----------------|---------------|-------------------------------|
-| Discovery      | {X weeks}     | {deliverables}                |
-| MVP            | {X months}    | {deliverables}                |
-| Beta           | {X months}    | {deliverables}                |
-| Launch         | {X weeks}     | {deliverables}                |
-| Scale          | {Ongoing}     | {deliverables}                |
-| **Total to Launch** | **{X months}** |                          |
+| Discovery | {X weeks} | {deliverables} |
+| MVP | {X months} | {deliverables} |
+| Beta | {X months} | {deliverables} |
+| Launch | {X weeks} | {deliverables} |
+| Scale | {Ongoing} | {deliverables} |
+| **Total to Launch** | **{X months}** | |
 
 **Critical Path:** {What must happen sequentially}
 **Schedule Risks:** {Key factors that could cause delays}
@@ -156,9 +158,9 @@ reader should understand the conclusion from this paragraph alone.}
 **Solo Operator Viability:** {Yes at any scale | Yes up to $XM ARR | Risky | No}
 
 **Component Automation Audit:**
-| Function                    | Level | Classification        | Notes                      |
+| Function | Level | Classification | Notes |
 |-----------------------------|-------|-----------------------|----------------------------|
-| {function}                  | {A-E} | {classification}      | {what makes it A/B/C/D/E}  |
+| {function} | {A-E} | {classification} | {what makes it A/B/C/D/E} |
 
 **Self-Validating Loops:**
 {For any AI-automated components, describe the validation loop and ground truth sources}
@@ -174,9 +176,9 @@ reader should understand the conclusion from this paragraph alone.}
 
 ## 8. Risk Assessment
 
-| # | Risk                  | Category   | L | I | Score | Class    | Mitigation                |
-|---|-----------------------|------------|---|---|-------|----------|---------------------------|
-| 1 | {risk description}    | {category} | {L} | {I} | {S} | {class} | {mitigation strategy}    |
+| #   | Risk               | Category   | L   | I   | Score | Class   | Mitigation            |
+| --- | ------------------ | ---------- | --- | --- | ----- | ------- | --------------------- |
+| 1   | {risk description} | {category} | {L} | {I} | {S}   | {class} | {mitigation strategy} |
 
 **Red Flags Identified:** {List any red flag patterns that apply, or "None"}
 
@@ -188,24 +190,26 @@ reader should understand the conclusion from this paragraph alone.}
 
 **Overall Score:** {X.X}/5.0 (Confidence: {L/M/H})
 
-| Dimension    | Score | Weight | Weighted |
-|--------------|-------|--------|----------|
-| Technical    | {X}/5 | 20%    | {X.XX}   |
-| Economic     | {X}/5 | 20%    | {X.XX}   |
-| Market       | {X}/5 | 15%    | {X.XX}   |
-| Operational  | {X}/5 | 10%    | {X.XX}   |
-| Schedule     | {X}/5 | 10%    | {X.XX}   |
-| Automation   | {X}/5 | 25%    | {X.XX}   |
-| **Total**    |       | 100%   | **{X.XX}** |
+| Dimension   | Score | Weight | Weighted   |
+| ----------- | ----- | ------ | ---------- |
+| Technical   | {X}/5 | 20%    | {X.XX}     |
+| Economic    | {X}/5 | 20%    | {X.XX}     |
+| Market      | {X}/5 | 15%    | {X.XX}     |
+| Operational | {X}/5 | 10%    | {X.XX}     |
+| Schedule    | {X}/5 | 10%    | {X.XX}     |
+| Automation  | {X}/5 | 25%    | {X.XX}     |
+| **Total**   |       | 100%   | **{X.XX}** |
 
 {If CONDITIONAL GO: List the conditions that must be met}
 
 ### Key Assumptions
+
 1. {Assumption that, if wrong, could change the recommendation}
 2. {Assumption}
 3. {Assumption}
 
 ### Recommended Next Steps
+
 1. {Concrete action item}
 2. {Concrete action item}
 3. {Concrete action item}

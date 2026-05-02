@@ -24,11 +24,11 @@ a structured report with a go/no-go recommendation.
 
 Parse `$ARGUMENTS` for `--depth` flag. Default to `standard` if not specified.
 
-| Mode     | Scope                                    | Estimation Method     |
-|----------|------------------------------------------|-----------------------|
-| quick    | Technical + Economic only, skip research | T-shirt sizing        |
-| standard | Full TELOS analysis with research        | Function points       |
-| deep     | Full TELOS + detailed TCO + market sizing| COCOMO II + full TCO  |
+| Mode     | Scope                                     | Estimation Method    |
+| -------- | ----------------------------------------- | -------------------- |
+| quick    | Technical + Economic only, skip research  | T-shirt sizing       |
+| standard | Full TELOS analysis with research         | Function points      |
+| deep     | Full TELOS + detailed TCO + market sizing | COCOMO II + full TCO |
 
 ## Phase 0: Parse Input and Configure
 
@@ -46,6 +46,7 @@ AskUserQuestion for each. **Smart-skip**: if the URL/description already
 answers a question, skip it and state what you inferred.
 
 **Required context (must have all before proceeding):**
+
 1. **Product**: What is the product? What does it do? (pre-fill from URL analysis)
 2. **Users**: Who is the target user? What problem does it solve for them?
 3. **Business model**: How will it make money? (SaaS, marketplace, one-time, etc.)
@@ -53,6 +54,7 @@ answers a question, skip it and state what you inferred.
 5. **Success metrics**: What does success look like? Scale targets?
 
 After gathering answers, print a brief summary:
+
 ```
 ## Understanding
 - Product: ...
@@ -65,6 +67,7 @@ After gathering answers, print a brief summary:
 ## Gate 1: Sufficient Context
 
 Verify you have minimum viable context to proceed. Checklist:
+
 - [ ] Product is clearly defined
 - [ ] Target user is identified
 - [ ] Business model is understood (or explicitly "to be determined")
@@ -78,6 +81,7 @@ proceed until the checklist passes.
 > **Skip this phase for `--depth quick`**
 
 Use WebSearch to research:
+
 1. **Competitive landscape**: Find 3-5 direct competitors or similar products
 2. **Market signals**: Market size indicators, growth trends, recent funding
 3. **Technical precedents**: Open source projects, published architectures, known challenges
@@ -99,6 +103,7 @@ Score each dimension 1-5 and provide evidence for the score.
 Read `references/technical-analysis.md` for the framework.
 
 Analyze:
+
 - **Architecture complexity**: Classify as Simple / Moderate / Complex / Extreme
 - **Core components**: List major technical components needed
 - **Technology stack**: Recommend stack, flag any unproven technologies
@@ -117,11 +122,13 @@ Read `references/cost-estimation.md` for frameworks and rate cards.
 **For deep mode**: Run `scripts/estimate.py` with COCOMO parameters.
 
 Estimate three separate dimensions:
+
 1. **Effort** (person-months): Total work regardless of who does it
 2. **Calendar time** (months): Wall-clock time based on team size
 3. **Cash cost** ($): Actual money spent — founder sweat equity = $0
 
 Break down by:
+
 - **Development effort**: By component/phase, with AI adjustment
 - **Team composition**: Founders (sweat equity) vs. contractors (cash cost)
 - **Infrastructure cost**: Monthly/annual hosting, third-party services
@@ -131,6 +138,7 @@ Break down by:
 - **ROI analysis**: Payback period, 3-year ROI
 
 Script supports team configuration:
+
 ```bash
 # Solo founder + Claude Code, no cash cost
 echo '{"operation": "function_points", "unadjusted_fp": 200, "ai_level": "very_high", "contractor_count": 0}' | python3 ${CLAUDE_SKILL_DIR}/scripts/estimate.py
@@ -161,6 +169,7 @@ Output: Economic Feasibility Score (1-5) with cost summary table.
 Read `references/market-analysis.md` for the framework.
 
 Analyze:
+
 - **Market size**: TAM / SAM / SOM estimates
 - **Competitive landscape**: Position vs. competitors found in Phase 2
 - **Differentiation**: What makes this different? Is it defensible?
@@ -172,6 +181,7 @@ Output: Market Feasibility Score (1-5) with positioning summary.
 ### 3d. Operational Feasibility
 
 Analyze:
+
 - **Team requirements**: Roles, skills, hiring difficulty
 - **Process requirements**: Development methodology, release cadence
 - **Support model**: Customer support needs, SLA expectations
@@ -182,6 +192,7 @@ Output: Operational Feasibility Score (1-5) with team summary.
 ### 3e. Schedule Feasibility
 
 Analyze:
+
 - **Phase breakdown**: Discovery → MVP → Beta → Launch → Scale
 - **Milestone timeline**: Calendar estimates for each phase
 - **Critical path**: What must happen sequentially vs. in parallel
@@ -214,6 +225,7 @@ Analyze each operational function of the product for automation potential:
 Output: Automation Feasibility Score (1-5) with component automation table.
 
 Scoring guide:
+
 - 5: Fully automatable — runs unattended, self-heals, scales without headcount
 - 4: Near-full automation — occasional human check-ins (weekly), AI handles rest
 - 3: Partially automated — regular human tasks (daily), but core ops are automated
@@ -223,6 +235,7 @@ Scoring guide:
 ## Gate 2: Analysis Complete
 
 Verify all dimensions are scored:
+
 - [ ] Technical score assigned (1-5) with evidence
 - [ ] Economic score assigned (1-5) with cost estimates
 - [ ] Market score assigned (1-5) — skip detailed for quick mode
@@ -273,6 +286,7 @@ Output: Risk matrix table sorted by risk score (highest first).
 Read `references/report-template.md` for the full output format.
 
 ### Step 1: Save the full report
+
 Generate the complete feasibility report and save to:
 `feasibility-report-{product-name}-{YYYY-MM-DD}.md` in the current working directory.
 
@@ -324,6 +338,7 @@ Ask: "Here are the key points I'd like to discuss. What would you like
 to dig into first?"
 
 Options:
+
 - **Technical deep-dive** — Architecture, stack choices, and the hardest
   engineering challenges
 - **Cost breakdown** — Where the money goes, hidden costs, and how to
@@ -342,6 +357,7 @@ discussing, ask if they want to explore another topic or if they're done.
 ### Step 5: Wrap up
 
 When the user is done discussing, remind them:
+
 - Full report saved to: `feasibility-report-{product-name}-{date}.md`
 - Offer to open it: `open {path}`
 - Offer to adjust any scores, re-run at a different depth, or analyze

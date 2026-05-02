@@ -3,6 +3,7 @@
 ## Risk Taxonomy
 
 ### Technical Risks
+
 - Architecture won't scale to target load
 - Key technology is immature, poorly supported, or nearing end-of-life
 - Integration with external systems fails or is unreliable
@@ -12,6 +13,7 @@
 - Technical debt accumulates faster than expected
 
 ### Market Risks
+
 - Insufficient demand — users don't want the product
 - Pricing pressure from competitors or free alternatives
 - Competitor launches superior product during development
@@ -21,6 +23,7 @@
 - Regulatory changes disrupt the market
 
 ### Operational Risks
+
 - Cannot hire required talent in time or budget
 - Key person dependency — single points of failure on the team
 - Vendor lock-in to a critical third-party service
@@ -30,6 +33,7 @@
 - Scope creep beyond original feasibility parameters
 
 ### Financial Risks
+
 - Development budget overrun (most common: 50-200% over estimate)
 - Revenue ramp slower than projected
 - Cash flow timing — expenses front-loaded, revenue delayed
@@ -38,6 +42,7 @@
 - Funding dependent on milestones not yet achieved
 
 ### Legal / Regulatory Risks
+
 - Data privacy non-compliance (GDPR, CCPA, HIPAA)
 - Intellectual property disputes or patent infringement
 - Terms of service violations (web scraping, API usage)
@@ -50,47 +55,49 @@
 Score each risk on two dimensions:
 
 ### Likelihood Scale
-| Score | Level          | Description                             |
-|-------|----------------|-----------------------------------------|
-| 1     | Rare           | Very unlikely to occur                  |
-| 2     | Unlikely       | Could occur but not expected            |
-| 3     | Possible       | Reasonable chance of occurring          |
-| 4     | Likely         | More likely to occur than not           |
-| 5     | Almost Certain | Expected to occur                       |
+
+| Score | Level          | Description                    |
+| ----- | -------------- | ------------------------------ |
+| 1     | Rare           | Very unlikely to occur         |
+| 2     | Unlikely       | Could occur but not expected   |
+| 3     | Possible       | Reasonable chance of occurring |
+| 4     | Likely         | More likely to occur than not  |
+| 5     | Almost Certain | Expected to occur              |
 
 ### Impact Scale
-| Score | Level    | Description                                         |
-|-------|----------|-----------------------------------------------------|
-| 1     | Minimal  | Minor inconvenience, easily absorbed                |
-| 2     | Low      | Some rework needed, minor cost/schedule impact      |
-| 3     | Medium   | Significant rework, notable cost/schedule impact    |
-| 4     | High     | Major rework, threatens project viability           |
-| 5     | Critical | Project failure, business-threatening               |
+
+| Score | Level    | Description                                      |
+| ----- | -------- | ------------------------------------------------ |
+| 1     | Minimal  | Minor inconvenience, easily absorbed             |
+| 2     | Low      | Some rework needed, minor cost/schedule impact   |
+| 3     | Medium   | Significant rework, notable cost/schedule impact |
+| 4     | High     | Major rework, threatens project viability        |
+| 5     | Critical | Project failure, business-threatening            |
 
 ### Risk Score = Likelihood x Impact
 
-| Risk Score | Classification | Action Required                          |
-|------------|----------------|------------------------------------------|
-| 20-25      | Critical       | Immediate mitigation plan required        |
-| 12-19      | High           | Mitigation plan required before proceeding|
-| 6-11       | Medium         | Monitor and have contingency plan         |
-| 1-5        | Low            | Accept and monitor                        |
+| Risk Score | Classification | Action Required                            |
+| ---------- | -------------- | ------------------------------------------ |
+| 20-25      | Critical       | Immediate mitigation plan required         |
+| 12-19      | High           | Mitigation plan required before proceeding |
+| 6-11       | Medium         | Monitor and have contingency plan          |
+| 1-5        | Low            | Accept and monitor                         |
 
 ## Risk Response Strategies
 
-| Strategy   | When to Use                              | Example                                   |
-|------------|------------------------------------------|-------------------------------------------|
-| **Avoid**  | Risk is too high, alternative exists     | Choose proven tech over experimental       |
-| **Transfer** | Risk can be shifted to a third party   | Use managed database instead of self-hosted|
-| **Mitigate** | Reduce likelihood or impact            | Build prototype to validate architecture   |
-| **Accept** | Risk is low or cost of mitigation too high| Acknowledge and set aside contingency     |
+| Strategy     | When to Use                                | Example                                     |
+| ------------ | ------------------------------------------ | ------------------------------------------- |
+| **Avoid**    | Risk is too high, alternative exists       | Choose proven tech over experimental        |
+| **Transfer** | Risk can be shifted to a third party       | Use managed database instead of self-hosted |
+| **Mitigate** | Reduce likelihood or impact                | Build prototype to validate architecture    |
+| **Accept**   | Risk is low or cost of mitigation too high | Acknowledge and set aside contingency       |
 
 ## Risk Register Template
 
-| # | Risk Description | Category  | L (1-5) | I (1-5) | Score | Class    | Mitigation Strategy        | Owner |
-|---|------------------|-----------|---------|---------|-------|----------|----------------------------|-------|
-| 1 |                  |           |         |         |       |          |                            |       |
-| 2 |                  |           |         |         |       |          |                            |       |
+| #   | Risk Description | Category | L (1-5) | I (1-5) | Score | Class | Mitigation Strategy | Owner |
+| --- | ---------------- | -------- | ------- | ------- | ----- | ----- | ------------------- | ----- |
+| 1   |                  |          |         |         |       |       |                     |       |
+| 2   |                  |          |         |         |       |       |                     |       |
 
 ## Red Flag Patterns
 
@@ -113,11 +120,11 @@ These patterns significantly increase project risk. Flag any that apply:
 
 Based on project complexity and risk profile:
 
-| Risk Profile    | Contingency Buffer |
-|-----------------|--------------------|
-| Low risk        | 10-15% of budget   |
-| Medium risk     | 15-25% of budget   |
-| High risk       | 25-40% of budget   |
-| Very high risk  | 40-60% of budget   |
+| Risk Profile   | Contingency Buffer |
+| -------------- | ------------------ |
+| Low risk       | 10-15% of budget   |
+| Medium risk    | 15-25% of budget   |
+| High risk      | 25-40% of budget   |
+| Very high risk | 40-60% of budget   |
 
 Apply to both cost and schedule estimates.
