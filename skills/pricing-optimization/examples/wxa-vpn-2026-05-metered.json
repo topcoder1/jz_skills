@@ -1,0 +1,112 @@
+{
+  "_about": "WXA VPN METERED + STRUCTURAL extension, May 2026. Generalizes wxa-vpn-2026-05.json by adding (a) a per-segment monthly VOLUME and (b) per-tier CREDIT caps, so routing fences by BOTH features AND metered volume. This lets us test whether the API-credit quotas (200K/1M/5M) and the feature unlock ladder (provider-name@Starter, MMDB@Pro, Parquet@Business) are optimal -- not just the prices. All substitute prices S re-verified 2026-05-28 PT.",
+  "_material_correction": "v1 segment S3 (mmdb buyer) used S=500 anchored to 'IPinfo Enterprise ~$417-833 / MaxMind sales-gated'. The 2026-05-28 live pull shows that is now WRONG: IPinfo Core ($49/mo), Plus ($74/mo), and Max ($94/mo) all bundle a DOWNLOADABLE MMDB self-serve, with Max including VPN-provider names + residential-proxy attribution -- feature-equivalent to WXA's MMDB tier. Corrected S3 substitute to $94 (IPinfo Max). This is the single biggest change vs v1 and it is the load-bearing anchor for the feature-ladder question (break-point reported in the run).",
+  "_unlimited_sentinel": "credits: null means unlimited (loader maps to +inf).",
+  "params": {"annual_signups": 4800, "paid_intent_share": 0.07, "enterprise_deals": 2},
+
+  "segments": [
+    {"name": "S1 dev/basic-flags", "size": 0.34, "need": "api_low", "volume": 150000,
+     "R": 35, "S": 19, "g": 0,
+     "_source": "ipgeolocation.io Starter $19/150K, full vpn+tor detection (2026-05-28)"},
+    {"name": "S2 mid-API named", "size": 0.30, "need": "api_mid", "volume": 1000000,
+     "R": 130, "S": 79, "g": 10,
+     "_source": "ipgeolocation.io Pro $79/1M (2026-05-28); +10 WXA provider-name depth. VOLUME 1M is the load-bearing fact: it exceeds a 200K Starter cap."},
+    {"name": "S3 mmdb-mid-market", "size": 0.18, "need": "api_mid", "needs": ["mmdb"], "volume": 1000000,
+     "R": 200, "S": 94, "g": 15,
+     "_source": "IPinfo Max $94/mo bundles MMDB + VPN-provider + residential, self-serve (2026-05-28); +15 NetFlow/freshness edge. CORRECTED from v1 S=500."},
+    {"name": "S4 dataeng-parquet", "size": 0.13, "need": "api_mid", "needs": ["mmdb", "parquet"], "volume": 5000000,
+     "R": 750, "S": 900, "g": -250,
+     "_source": "Spur Pro $1,600 / IPQS $600-1150; -250 coverage-gap penalty (2-5M vs 148M IPs). Parquet+bulk not self-serve at any verified competitor."},
+    {"name": "S5 enterprise", "size": 0.05, "need": "enterprise", "enterprise": true, "volume": 0,
+     "R": 4000, "S": 3500, "g": 0,
+     "_source": "Spur median $39K/yr, IPQS median $45K/yr ACV"}
+  ],
+
+  "grids": {
+    "M mockup (49/149/399 | 200K/1M/5M)": {
+      "enterprise_floor": 2000,
+      "tiers": [
+        {"name": "Starter",  "price": 49,  "credits": 200000,  "unlocks": ["api_low", "api_mid"]},
+        {"name": "Pro",       "price": 149, "credits": 1000000, "unlocks": ["api_low", "api_mid", "mmdb"]},
+        {"name": "Business",  "price": 399, "credits": 5000000, "unlocks": ["api_low", "api_mid", "mmdb", "parquet"]}
+      ]
+    },
+    "O v1-price-opt (49/199/499 | 200K/1M/5M)": {
+      "enterprise_floor": 3000,
+      "tiers": [
+        {"name": "Starter",  "price": 49,  "credits": 200000,  "unlocks": ["api_low", "api_mid"]},
+        {"name": "Pro",       "price": 199, "credits": 1000000, "unlocks": ["api_low", "api_mid", "mmdb"]},
+        {"name": "Business",  "price": 499, "credits": 5000000, "unlocks": ["api_low", "api_mid", "mmdb", "parquet"]}
+      ]
+    },
+    "C credit-fixed (49/149/399 | 1M/1M/5M)": {
+      "enterprise_floor": 2000,
+      "tiers": [
+        {"name": "Starter",  "price": 49,  "credits": 1000000, "unlocks": ["api_low", "api_mid"]},
+        {"name": "Pro",       "price": 149, "credits": 1000000, "unlocks": ["api_low", "api_mid", "mmdb"]},
+        {"name": "Business",  "price": 399, "credits": 5000000, "unlocks": ["api_low", "api_mid", "mmdb", "parquet"]}
+      ]
+    },
+    "F feature+credit-fixed (49/119/399 | 1M/1M/5M, MMDB@Pro $119)": {
+      "enterprise_floor": 2000,
+      "tiers": [
+        {"name": "Starter",  "price": 49,  "credits": 1000000, "unlocks": ["api_low", "api_mid"]},
+        {"name": "Pro",       "price": 119, "credits": 1000000, "unlocks": ["api_low", "api_mid", "mmdb"]},
+        {"name": "Business",  "price": 399, "credits": 5000000, "unlocks": ["api_low", "api_mid", "mmdb", "parquet"]}
+      ]
+    }
+  },
+
+  "credit_bands": {
+    "_about": "Hold the mockup prices + feature ladder fixed; sweep ONLY the credit caps to find the ARR-max quotas. Tests whether 200K/1M/5M is optimal.",
+    "prices": [49, 149, 399],
+    "enterprise_floor": 2000,
+    "structure": [
+      {"role": "Starter",  "unlocks": ["api_low", "api_mid"],
+       "credit_band": [100000, 150000, 200000, 350000, 500000, 1000000, 2000000]},
+      {"role": "Pro",       "unlocks": ["api_low", "api_mid", "mmdb"],
+       "credit_band": [500000, 1000000, 2000000, 5000000]},
+      {"role": "Business",  "unlocks": ["api_low", "api_mid", "mmdb", "parquet"],
+       "credit_band": [2000000, 5000000, 10000000, null]}
+    ]
+  },
+
+  "structure_bands": {
+    "_about": "Hold the mockup prices (49/149/399) + caps (1M/1M/5M after the credit fix) fixed; sweep WHICH tier first unlocks mmdb and parquet. Tests whether MMDB@Pro is the optimal placement given the verified $94 substitute.",
+    "prices": [49, 149, 399],
+    "credits": [1000000, 1000000, 5000000],
+    "enterprise_floor": 2000,
+    "tier_names": ["Starter", "Pro", "Business"],
+    "base_unlocks": ["api_low", "api_mid"],
+    "ladder_features": ["mmdb", "parquet"]
+  },
+
+  "breakpoint_anchor": {
+    "_about": "S3's MMDB substitute is the freshly-corrected, load-bearing anchor. Sweep it to find where MMDB@Pro-$149 (grid M) overtakes MMDB-priced-lower (grid F).",
+    "segment": "S3 mmdb-mid-market", "anchor": "S"
+  },
+
+  "search_bands": {
+    "structure": [
+      {"role": "Starter",  "unlocks": ["api_low", "api_mid"],                     "band": [19, 29, 39, 49, 59, 69, 79]},
+      {"role": "Pro",       "unlocks": ["api_low", "api_mid", "mmdb"],            "band": [79, 99, 119, 149, 199, 249, 299]},
+      {"role": "Business",  "unlocks": ["api_low", "api_mid", "mmdb", "parquet"], "band": [349, 399, 449, 499, 599, 699, 799]}
+    ],
+    "enterprise_band": [2000, 2500, 3000, 3500],
+    "_credits_for_search": [1000000, 1000000, 5000000]
+  },
+
+  "jitter": {
+    "annual_signups": [1800, 9600], "paid_intent_share": [0.03, 0.10],
+    "enterprise_deals": [0, 1, 1, 2, 2, 3], "size_mult": [0.75, 1.25],
+    "R_mult": [0.8, 1.2], "S_mult": [0.8, 1.2], "volume_mult": [0.6, 1.6]
+  },
+
+  "adversarial": {
+    "scale": [0.10, 0.50], "size_mult": [0.40, 1.60],
+    "R_mult": [0.5, 1.6], "S_mult": [0.5, 1.6], "g_mult": [0.3, 2.0],
+    "volume_mult": [0.4, 2.0],
+    "annual_signups": [1200, 12000], "paid_intent_share": [0.02, 0.12],
+    "enterprise_deals": [0, 1, 2, 3, 4]
+  }
+}
