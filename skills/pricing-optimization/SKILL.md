@@ -82,6 +82,16 @@ python3 scripts/pricing_model.py --schema     # full config schema + field docs
 A complete worked example ships at `examples/wxa-vpn-2026-05.json` (run it first
 to see the expected output shape). Copy it as a starting template for a new product.
 
+**Verify the engine itself** is arithmetically correct (independent
+reimplementation proof — capture curve, tier selection, ARR accounting,
+conservation, grid-search-is-a-true-max) with:
+
+```bash
+python3 scripts/verify_model.py            # exits non-zero if any proof fails
+```
+
+Run this after any edit to `pricing_model.py`.
+
 ## Depth modes
 
 Parse `$ARGUMENTS` for `--depth` (default `standard`):
