@@ -123,18 +123,23 @@ def gk_frontier():
 # --------------------------------------------------------- (3) per-tier frontier
 # Verified substitutes per tier's dominant buyer. Values match the committed
 # config (S3 substitute = $94) so the displayed ratio and the computed optimum
-# use the SAME anchor. Research (2026-05-28) REVISED Pro's true substitute DOWN
-# to $74 (IPinfo Plus, named providers, self-serve) -- applying that lowers c
-# from min(200,94+15)=109 to min(200,74+15)=89 and drags Pro's optimum from ~$87
-# to ~$71, i.e. further BELOW substitute (strengthens "no premium room at Pro").
-# Research also SPLIT Business: residential-attribution sub = $94 (IPinfo Max,
-# self-serve) vs bulk-Parquet sub = $900 (Spur/IPQS, NOT self-serve anywhere) --
-# the $399 tier bundles two buyers with ~10x different substitutes (packaging,
-# not price-level, problem). The $900 anchor below is the bulk-Parquet buyer.
+# use the SAME anchor. LIVE VERIFICATION (2026-05-28) of the load-bearing IPinfo
+# fact: the $49/$74/$94 plans are API-LOOKUP subscriptions; the downloadable
+# named-provider MMDB is SALES-GATED at every self-serve tier ("not included in
+# self-serve plans... contact our sales team", no published price). So the $74-$94
+# anchor is correct ONLY for API access -- a WXA tier that ships a downloadable
+# MMDB FILE faces no self-serve substitute and belongs in the premium-lever column
+# with Business/Enterprise, NOT capped at $74/$94. The Pro anchor below ($94) is
+# therefore the API-access substitute (IPinfo Max API), held config-consistent so
+# ratio and optimum share one number; treat the MMDB-download capability as a lever.
+# Business is also two buyers: residential-attribution (IPinfo Max API $94, self-
+# serve) vs bulk-Parquet (Spur/IPQS $900, NOT self-serve anywhere). The $399 tier
+# bundles ~10x-different substitutes (packaging problem). The $900 anchor below is
+# the bulk-Parquet buyer.
 TIER_SUB = {
-    "Starter":  ("ipgeolocation Pro 1M (S2)",      79,  130),
-    "Pro":      ("IPinfo named-provider MMDB",      94,  200),
-    "Business": ("Spur/IPQS bulk Parquet (S4)",     900, 750),
+    "Starter":  ("ipgeolocation Pro 1M (S2)",          79,  130),
+    "Pro":      ("IPinfo Max API (MMDB dl sales-gated)", 94, 200),
+    "Business": ("Spur/IPQS bulk Parquet (S4)",         900, 750),
 }
 BANDS = {"Starter": range(19, 160, 2),
          "Pro": range(49, 420, 2),
@@ -166,10 +171,12 @@ def per_tier_frontier():
                  else "modest premium defensible" if ratio <= 1.35
                  else "strong premium (substitute costly/absent)")
             print(f"    {t:9s} ${p:>6.0f} ${S:>5.0f} {ratio:>6.2f}x  {v}")
-    print("\n    => premium is ASYMMETRIC: Business (sub $900, no self-serve) is the")
-    print("       real lever; Pro (sub $74) is already at/above its ceiling; Starter")
-    print("       (sub $79) has no room. Enterprise (no published substitute) is the")
-    print("       one unconstrained premium lane.\n")
+    print("\n    => premium is ASYMMETRIC. Levers (no self-serve substitute): Business")
+    print("       bulk-Parquet (sub $900), Enterprise (none), AND the downloadable-MMDB")
+    print("       feature (IPinfo MMDB dl is sales-gated, verified 2026-05-28). Traps")
+    print("       (cheap self-serve substitute exists): Starter (sub $79) and Pro priced")
+    print("       as plain API access (IPinfo Max API $94). The $94 Pro anchor caps API")
+    print("       access only -- the MMDB download is a lever, not a $94-capped product.\n")
 
 
 if __name__ == "__main__":
