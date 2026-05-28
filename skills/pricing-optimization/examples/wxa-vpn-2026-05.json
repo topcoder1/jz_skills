@@ -1,0 +1,65 @@
+{
+  "_about": "WXA VPN API tier pricing, May 2026. All R/S anchored to competitor prices observed 2026-05-28. Worked example for the pricing-optimization skill.",
+  "params": {"annual_signups": 4800, "paid_intent_share": 0.07, "enterprise_deals": 2},
+  "segments": [
+    {"name": "S1 dev/basic-flags", "size": 0.34, "need": "api_low",
+     "R": 35, "S": 19, "g": 0,
+     "_source": "ipgeolocation.io Starter $19/150K, full vpn+tor+residential detection"},
+    {"name": "S2 mid-API named", "size": 0.30, "need": "api_mid",
+     "R": 130, "S": 79, "g": 10,
+     "_source": "ipgeolocation.io Pro $79/1M full detect, no MMDB; +10 WXA provider-name depth"},
+    {"name": "S3 mmdb-mid-market", "size": 0.18, "need": "api_mid", "needs": ["mmdb"],
+     "R": 450, "S": 500, "g": 0,
+     "_source": "IPinfo Enterprise ~$417-833 / MaxMind sales-gated = high, inaccessible substitute"},
+    {"name": "S4 dataeng-parquet", "size": 0.13, "need": "api_mid", "needs": ["mmdb", "parquet"],
+     "R": 750, "S": 900, "g": -250,
+     "_source": "Spur Pro $1,600 / IPQS $600-1150; -250 coverage-gap penalty (2-5M vs 148M IPs)"},
+    {"name": "S5 enterprise", "size": 0.05, "need": "enterprise", "enterprise": true,
+     "R": 4000, "S": 3500, "g": 0,
+     "_source": "Spur median $39K/yr, IPQS median $45K/yr ACV"}
+  ],
+  "grids": {
+    "V your grid (49/149/399/2000)": {
+      "enterprise_floor": 2000,
+      "tiers": [
+        {"name": "Starter", "price": 49, "unlocks": ["api_low", "api_mid"]},
+        {"name": "Pro", "price": 149, "unlocks": ["api_low", "api_mid", "mmdb"]},
+        {"name": "Business", "price": 399, "unlocks": ["api_low", "api_mid", "mmdb", "parquet"]}
+      ]
+    },
+    "E email grid (129/399/2000)": {
+      "enterprise_floor": 2000,
+      "tiers": [
+        {"name": "Starter", "price": 129, "unlocks": ["api_low", "api_mid", "mmdb"]},
+        {"name": "Business", "price": 399, "unlocks": ["api_low", "api_mid", "mmdb", "parquet"]}
+      ]
+    },
+    "O optimized (49/199/499/3000)": {
+      "enterprise_floor": 3000,
+      "tiers": [
+        {"name": "Starter", "price": 49, "unlocks": ["api_low", "api_mid"]},
+        {"name": "Pro", "price": 199, "unlocks": ["api_low", "api_mid", "mmdb"]},
+        {"name": "Business", "price": 499, "unlocks": ["api_low", "api_mid", "mmdb", "parquet"]}
+      ]
+    }
+  },
+  "search_bands": {
+    "structure": [
+      {"role": "Starter", "unlocks": ["api_low", "api_mid"], "band": [19, 29, 39, 49, 59, 69, 79]},
+      {"role": "Pro", "unlocks": ["api_low", "api_mid", "mmdb"], "band": [99, 129, 149, 199, 249, 299, 349]},
+      {"role": "Business", "unlocks": ["api_low", "api_mid", "mmdb", "parquet"], "band": [349, 399, 449, 499, 599, 699, 799]}
+    ],
+    "enterprise_band": [2000, 2500, 3000, 3500]
+  },
+  "jitter": {
+    "annual_signups": [1800, 9600], "paid_intent_share": [0.03, 0.10],
+    "enterprise_deals": [0, 1, 1, 2, 2, 3], "size_mult": [0.75, 1.25],
+    "R_mult": [0.8, 1.2], "S_mult": [0.8, 1.2]
+  },
+  "adversarial": {
+    "scale": [0.10, 0.50], "size_mult": [0.40, 1.60],
+    "R_mult": [0.5, 1.6], "S_mult": [0.5, 1.6], "g_mult": [0.3, 2.0],
+    "annual_signups": [1200, 12000], "paid_intent_share": [0.02, 0.12],
+    "enterprise_deals": [0, 1, 2, 3, 4]
+  }
+}
